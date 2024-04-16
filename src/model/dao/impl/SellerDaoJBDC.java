@@ -54,11 +54,8 @@ public class SellerDaoJBDC implements SellerDao {
         }
         finally {
             DB.closeStatement(st);
-
         }
-
     }
-
     @Override
     public void update(Seller obj) {
         PreparedStatement st = null;
@@ -90,6 +87,20 @@ public class SellerDaoJBDC implements SellerDao {
 
     @Override
     public void deleteById(Integer id) {
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement("DELETE FROM seller WHERE Id = ?");
+
+            st.setInt(1, id);
+
+            st.executeUpdate();
+        }
+        catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+        }
 
     }
 
